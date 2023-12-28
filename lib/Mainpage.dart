@@ -14,6 +14,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+
   final List<String> strings = ["Chats", "Updates", "Calls"];
   var data = [];
   @override
@@ -41,6 +42,7 @@ class _MainPageState extends State<MainPage> {
     return DefaultTabController(
         length: 3,
         child: Scaffold(
+            resizeToAvoidBottomInset: false,
             appBar: AppBar(
               backgroundColor: Color.fromRGBO(37, 211, 102, 1),
               title: Row(
@@ -101,14 +103,17 @@ class _MainPageState extends State<MainPage> {
                 Chatdata(
                   key: null,
                   data: data,
+                  scrollController: ScrollController(),
                 ),
                 Chatdata(
                   key: null,
                   data: [],
+                  scrollController: ScrollController(),
                 ),
                 Chatdata(
                   key: null,
                   data: [],
+                  scrollController: ScrollController(),
                 ),
               ],
             )));

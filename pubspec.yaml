@@ -32,6 +32,13 @@ dependencies:
     sdk: flutter
   http: any
   bloc: ^8.1.2
+  firebase_core: ^2.24.0
+  firebase_auth: ^4.15.3
+  cloud_firestore: ^4.13.6
+  provider: ^6.1.1
+  firebase_storage: ^11.5.6
+  firebase_messaging: ^14.7.9
+  
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -39,8 +46,12 @@ dependencies:
   cupertino_icons: ^1.0.2
   zego_uikit_prebuilt_call: ^3.17.9
   permission_handler: ^11.0.1
-  html: ^0.15.4
+
   zego_uikit_signaling_plugin: ^2.6.7
+  pinput: ^3.0.1
+  
+
+
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +79,7 @@ flutter:
   assets:
     - images/login.png
     - images/d83012c34a8f88a64e2b.jpg
+    - images/image2.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

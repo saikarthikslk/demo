@@ -4,7 +4,9 @@ import 'package:http/http.dart' as http;
 
 class Chatdata extends StatelessWidget {
   final List data;
-  const Chatdata({super.key, required this.data});
+  final ScrollController scrollController;
+  const Chatdata(
+      {super.key, required this.data, required this.scrollController});
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +26,7 @@ class Chatdata extends StatelessWidget {
                   builder: (context) {
                     return ChatScreen(
                       key: null,
+                      controller: this.scrollController,
                       message: messages,
                       url: data[index]['results'][0]['picture']['large'],
                       name: data[index]['results'][0]['name']['first'],

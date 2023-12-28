@@ -1,34 +1,67 @@
 import 'dart:math';
+import 'package:app/audioscreen.dart';
 import 'package:app/message.dart';
 import 'package:app/typebox.dart';
+import 'package:app/videoscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 
-class ChatScreen extends StatelessWidget {
+class ChatScreen extends StatefulWidget {
   final name;
   final url;
   final message;
-  const ChatScreen({super.key, this.name, this.url, this.message});
+  final controller;
+  const ChatScreen(
+      {super.key,
+      required this.name,
+      required this.controller,
+      required this.message,
+      required this.url});
+
+  @override
+  State<ChatScreen> createState() => _ChatScreenState(
+      controller: this.controller,
+      message: this.message,
+      url: this.url,
+      name: this.name);
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+  final name;
+  final url;
+  final message;
+  final ScrollController controller;
+  _ChatScreenState(
+      {this.name, this.url, this.message, required this.controller});
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       backgroundColor: Color.fromRGBO(236, 229, 221, 1),
       bottomNavigationBar: Stack(children: [
         Container(
-            height: 100,
+            color: Color.fromRGBO(236, 229, 221, 1),
+            height: 60,
             alignment: Alignment.topLeft,
             padding: const EdgeInsets.only(left: 8),
+            margin: EdgeInsets.only(top: 16),
             child:
                 Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
               Container(
-                  width: 300,
+                  width: MediaQuery.of(context).size.width * 0.80,
                   height: 48,
-                  margin: const EdgeInsets.only(top: 16),
                   padding: const EdgeInsets.fromLTRB(20, 2, 4, 2),
                   decoration: const BoxDecoration(color: Colors.white),
-                  child: const Row(
+                  child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Icon(
@@ -45,16 +78,16 @@ class ChatScreen extends StatelessWidget {
                             expands: true,
                             textAlign: TextAlign.start,
                             decoration: InputDecoration(
-                                constraints: BoxConstraints(maxWidth: 200),
+                                constraints: BoxConstraints(
+                                    maxWidth:
+                                        MediaQuery.of(context).size.width *
+                                            0.6),
                                 hintText: "Message",
                                 border: InputBorder.none)),
                       ])),
-              SizedBox(
-                width: 25,
-              ),
               ElevatedButton(
                   style: const ButtonStyle(
-                      padding: MaterialStatePropertyAll(EdgeInsets.all(10)),
+                      elevation: MaterialStatePropertyAll(10.0),
                       shape: MaterialStatePropertyAll(CircleBorder(
                           side: BorderSide(
                               width: 1,
@@ -62,14 +95,14 @@ class ChatScreen extends StatelessWidget {
                       backgroundColor: MaterialStatePropertyAll(
                           Color.fromRGBO(37, 211, 102, 1))),
                   onPressed: () {},
-                  child: Icon(
-                    Icons.mic,
-                    color: Colors.white,
-                    size: 35,
-                  ))
-            ]))
+                  child: Icon(Icons.mic, color: Colors.white, size: 20))
+            ])),
+        SizedBox(
+          height: MediaQuery.of(context).viewInsets.bottom + 70,
+        )
       ]),
       body: ListView.builder(
+          reverse: true,
           itemCount: message.length,
           itemBuilder: (context, index) {
             if (index % 2 == 0) {
@@ -114,19 +147,35 @@ class ChatScreen extends StatelessWidget {
                         child: Text(name))
                   ],
                 ),
-                const Row(
+                Row(
                   children: [
-                    Icon(
-                      Icons.video_call,
-                      color: Colors.white,
-                    ),
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => CallPage(
+                              key: null,
+                            ),
+                          ));
+                        },
+                        child: Icon(
+                          Icons.video_call,
+                          color: Colors.white,
+                        )),
                     SizedBox(
                       width: 12,
                     ),
-                    Icon(
-                      Icons.call,
-                      color: Colors.white,
-                    ),
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => AudioPage(
+                              key: null,
+                            ),
+                          ));
+                        },
+                        child: Icon(
+                          Icons.call,
+                          color: Colors.white,
+                        )),
                     SizedBox(
                       width: 12,
                     ),
